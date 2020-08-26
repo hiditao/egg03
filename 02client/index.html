@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="./css/index.css" />
+	</head>
+	<body>
+
+		<table>
+			<thead>
+				<th>
+					<input type="checkbox" data-id="all">
+					全选
+				</th>
+				<th>图片</th>
+				<th>商品名称</th>
+				<th>规格</th>
+				<th>单价</th>
+				<th>数量</th>
+				<th>小计</th>
+				<th>操作</th>
+			</thead>
+
+			<tbody></tbody>
+		</table>
+
+		<h1>总价：</h1>
+
+		<script>
+			$.get("http://thd:9999/", function(result) {
+				let goodlist = result; 
+				console.log(goodlist);
+				// {
+				// 	pic: "./img/p1.jpg",
+				// 	name: "养生堂天然维生素E软胶囊230粒（200粒+15粒*2盒或200粒+30粒1盒随机发货） ve美容（祛黄褐斑） 延缓衰老",
+				// 	type: "维生素E230粒",
+				// 	price: 168,
+				// 	num: 1
+				// }
+
+				for (let i = 0; i < goodlist.length; i++) {
+					let tr = document.createElement("tr");
+					
+					// 前面的复选框
+					let td = document.createElement("td");
+					let check = document.createElement("input");
+					check.type = "checkbox";
+					td.appendChild(check);
+					tr.appendChild(td);
+
+					for (let key in goodlist[i]) {
+						let td = document.createElement("td");
+						if (key == "pic") {
+							let img = document.createElement("img");
+							img.src = goodlist[i][key];
+							td.appendChild(img);
+						} else if(key == "name") {
+							let a = document.createElement("a");
+							a.innerHTML = goodlist[i][key];
+							a.href = "#";
+							td.appendChild(a);
+						} else if(key == "type") {
+							let span = document.createElement("span");
+							span.innerHTML = goodlist[i][key];
+							td.appendChild(span);
+						} else if(key == "price") {
+							let span = document.createElement("span");
+							span.innerHTML = goodlist[i][key];
+							td.appendChild(span);
+						} else if(key == "num") {
+							
+							let subbtn = document.createElement("button");
+							subbtn.innerHTML = "-";
+							td.appendChild(subbtn);
+							
+							let span = document.createElement("span");
+							span.innerHTML = goodlist[i][key];
+							td.appendChild(span)
+							
+							let addbtn = document.createElement("button");
+							addbtn.innerHTML = "+";
+							td.appendChild(addbtn);
+						}
+						tr.appendChild(td);
+					}
+					
+					let toltd = document.createElement("td");
+					let tolspan = document.createElement("span");
+					tolspan.innerHTML = goodlist[i].num*goodlist[i].price;
+					toltd.appendChild(tolspan);
+					tr.appendChild(toltd);
+					
+					let deltd = document.createElement("td");
+					let delbtn = document.createElement("button");
+					delbtn.innerHTML = "删除";
+					deltd.appendChild(delbtn);
+					tr.appendChild(deltd);
+					
+					document.querySelector("tbody").appendChild(tr);
+				}
+			})
+		</script>
+	</body>
+</html>

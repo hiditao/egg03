@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>列表1<b>30</b></li>
+        <li>列表12<b>70</b></li>
+        <li>列表13<b>20</b></li>
+        <li>列表14<b>45</b></li>
+        <li>列表15<b>38</b></li>
+        <li>列表16<b>55</b></li>
+    </ul>
+
+    <script>
+        let list = Array.from(document.querySelectorAll("li"));
+        console.log(list)
+        console.log(Number(list[0].lastElementChild.innerHTML))
+        list.sort(function(a, b) {
+            return Number(a.lastElementChild.innerHTML) - Number(b.lastElementChild.innerHTML)
+        })
+        console.log(list)
+
+
+    </script>
+</body>
+</html>

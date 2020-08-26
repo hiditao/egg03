@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 全局函数
+        function fn(data) {
+            console.log(data)
+        }
+
+        // 创建script标签，并加入到文档树中
+        let sc = document.createElement("script");
+        sc.src = "http://localhost:9999/jsonp?cb=fn";
+        document.body.appendChild(sc);
+
+    </script>
+</body>
+</html>

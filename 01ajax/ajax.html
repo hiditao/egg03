@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <button onclick="get1()">原生ajax get请求</button>
+    <button onclick="post1()">原生ajax post请求</button>
+    <button onclick="get2()">jQuery get请求</button>
+    <button onclick="post2()">jQuery post请求</button>
+    <script>
+        function get1() {
+            // (1)创建ajax对象，并做兼容
+            // (2)建立连接
+            // (3)发送数据包
+            // (4)监听状态改变
+            // (5)接收响应的数据
+            // (6)setDataToUI
+            let xhr = new XMLHttpRequest() || ActiveXObject("Microsoft.XMLHTTP");
+            xhr.open("GET", "http://localhost:9999/one?name=aa&pwd=666");
+            xhr.send(); //null
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            }
+        }
+
+        function post1() {
+            let xhr = new XMLHttpRequest() || ActiveXObject("Microsoft.XMLHTTP");
+            xhr.open("POST", "http://localhost:9999/two");
+            //发送的数据包{name: "张三", pwd: "123"}
+            xhr.send(JSON.stringify({name: "张三", pwd: "123"})); 
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            }
+        }
+   
+        function get2() {
+            $.get("http://localhost:9999/three?name=Rose&sex=女", function(data){
+                console.log(data)
+            } )
+        }
+
+        function post2() {
+            // $.post("http://localhost:9999/four", JSON.stringify({name: "宋江", age: 30}), function(data) {
+            $.post("http://localhost:9999/four", {name: "宋江", age: 30}, function(data) {
+                console.log(data);
+            })
+        }
+   </script>
+
+</body>
+
+</html>

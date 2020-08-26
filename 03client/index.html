@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <button onclick="getAjax()">get请求</button>
+    <button onclick="postAjax()">post请求</button>
+
+    <hr>
+
+    <!-- username=123&passwd=111 -->
+    <form action="http://localhost:8080/register" method="POST" name="login">
+        用户名： <input type="text" name="username"> <br /><br />
+        密　码： <input type="password" name="passwd"> <br /><br />
+        <input type="submit" value="注册">
+    </form>
+
+    <hr>
+    <form action="http://localhost:8080/upload" method="POST" name="uploadFile" enctype="multipart/form-data">
+        <input type="file" name="avatar"><br /><br />
+        <input type="submit" value="上传头像">
+    </form>
+
+
+
+    <script>
+        function getAjax() {
+            let xhr = new XMLHttpRequest() || ActiveXObject("Microsoft.XMLHTTP");
+            xhr.open("GET", "http://localhost:8080/goods?id=1&name=张三&pwd=123");
+            xhr.send();
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+
+                    let result = JSON.parse(xhr.responseText);
+                    if(result.code == 1) {
+                        // 打开新页面
+                        // location.assign("http://www.baidu.com");
+                        window.open("http://www.baidu.com", "_blank");
+                    }
+
+                }
+            }
+        }
+
+        function postAjax() {
+            // let xhr = new XMLHttpRequest() || ActiveXObject("Microsoft.XMLHTTP");
+            // xhr.open("POST", "http://localhost:7001/login");
+            // xhr.send({username: "aaa", passwd: "666"});
+            // xhr.onreadystatechange = function(){
+            //     if(xhr.readyState == 4 && xhr.status == 200) {
+            //         console.log(xhr.responseText);
+            //     }
+            // }
+            $.ajax({
+                method: "POST",
+                url: "http://localhost:8080/login",
+                data: {
+                    username: "aaaa",
+                    passwd: "1234"
+                },
+                success: function(data) {
+                    console.log(data)
+                }
+            })
+        }
+
+    </script>
+</body>
+</html>
